@@ -33,7 +33,7 @@ def main():
 
     # --- Add Aquomixlab Logo and Link to Sidebar ---
     st.sidebar.markdown("---")
-    st.sidebar.image("https://www.aquomixlab.com/uploads/1/3/3/3/133391218/published/logo-site-1.png?1618751855", use_container_width=True)
+    st.sidebar.image(https://github.com/trikaloudis/aquomixlab_nta_results_view/blob/main/Aquomixlab%20Logo%20v2.png, use_container_width=True)
     st.sidebar.markdown(
         "<div style='text-align: center;'><a href='https://www.aquomixlab.com/'>https://www.aquomixlab.com/</a></div>",
         unsafe_allow_html=True
@@ -246,3 +246,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
