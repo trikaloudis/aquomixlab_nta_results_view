@@ -33,7 +33,8 @@ def main():
 
     # --- Add Aquomixlab Logo and Link to Sidebar ---
     st.sidebar.markdown("---")
-    st.sidebar.image(https://github.com/trikaloudis/aquomixlab_nta_results_view/blob/main/Aquomixlab%20Logo%20v2.png, use_container_width=True)
+    # FIX: The URL must be a string (in quotes) and point to the raw image file.
+    st.sidebar.image("https://raw.githubusercontent.com/trikaloudis/aquomixlab_nta_results_view/main/Aquomixlab%20Logo%20v2.png", use_container_width=True)
     st.sidebar.markdown(
         "<div style='text-align: center;'><a href='https://www.aquomixlab.com/'>https://www.aquomixlab.com/</a></div>",
         unsafe_allow_html=True
@@ -246,4 +247,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
