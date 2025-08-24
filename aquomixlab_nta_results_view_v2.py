@@ -61,17 +61,23 @@ def main():
                 # If "Info" sheet doesn't exist or there's an error, just show a warning
                 st.warning("Could not read dataset information from the 'Info' sheet of the data file.")
 
-              # --- Read and display AquOmixLab notes ---
+             # --- Read and display AquOmixLab notes ---
             try:
                 # Read cells B10:B20 from the "Info" sheet
                 notes_df = pd.read_excel(data_file, sheet_name="Info", header=None, skiprows=9, nrows=11, usecols="B")
-                # Drop any empty rows that might have been read
-                notes_df.dropna(inplace=True)
-                if not notes_df.empty:
+                
+                # Convert the column to a list, handling potential empty values
+                notes_list = notes_df[0].dropna().tolist()
+
+                # Check if there are any valid notes to display
+                if notes_list:
                     with st.expander("AquOmixLab notes", expanded=True):
                         # Iterate through the notes and display them as a bulleted list
-                        for note in notes_df[0]:
-                             st.markdown(f"- {note}")
+                        for note in notes_list:
+                            # Ensure the note is a string and not just whitespace before displaying
+                            note_str = str(note).strip()
+                            if note_str:
+                                st.markdown(f"- {note_str}")
             except Exception:
                 # Silently fail if the notes can't be read.
                 # This prevents warnings if the notes section isn't used.
@@ -230,6 +236,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
