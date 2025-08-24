@@ -40,14 +40,16 @@ def main():
         unsafe_allow_html=True
     )
 
-
- # --- Main App Logic ---
+        # --- Main App Logic ---
     if data_file is not None and metadata_file is not None:
         try:
+            # --- FIX: Read the Excel file once to avoid file pointer issues ---
+            excel_file_data = pd.ExcelFile(data_file)
+
             # --- Read and display information from "Info" sheet ---
             try:
                 # Read the first 7 rows from the sheet named "Info"
-                info_df = pd.read_excel(data_file, sheet_name="Info", header=None, nrows=7)
+                info_df = pd.read_excel(excel_file_data, sheet_name="Info", header=None, nrows=7)
                 if not info_df.empty:
                     with st.expander("Show Dataset Information", expanded=True):
                         # Iterate through the rows and display them
@@ -66,18 +68,18 @@ def main():
                 # Read cells B10:B20 from the "Info" sheet
                 notes_df = pd.read_excel(excel_file_data, sheet_name="Info", header=None, skiprows=9, nrows=11, usecols="B")
                 
-                # Convert the column to a list, handling potential empty values
-                notes_list = notes_df[0].dropna().tolist()
+                # More robust cleaning: fill empty cells, convert to string, strip whitespace
+                notes_list = notes_df[0].fillna('').astype(str).str.strip().tolist()
+                
+                # Filter out any resulting empty strings
+                notes_list = [note for note in notes_list if note]
 
                 # Check if there are any valid notes to display
                 if notes_list:
                     with st.expander("AquOmixLab notes", expanded=True):
                         # Iterate through the notes and display them as a bulleted list
                         for note in notes_list:
-                            # Ensure the note is a string and not just whitespace before displaying
-                            note_str = str(note).strip()
-                            if note_str:
-                                st.markdown(f"- {note_str}")
+                            st.markdown(f"- {note}")
             except Exception:
                 # Silently fail if the notes can't be read.
                 # This prevents warnings if the notes section isn't used.
@@ -236,6 +238,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
