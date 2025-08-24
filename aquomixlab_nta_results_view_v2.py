@@ -41,13 +41,13 @@ def main():
     )
 
 
-    # --- Main App Logic ---
+ # --- Main App Logic ---
     if data_file is not None and metadata_file is not None:
         try:
-            # --- NEW: Read and display information from Sheet2 ---
+            # --- Read and display information from "Info" sheet ---
             try:
-                # Read the first 7 rows from the second sheet (index 1)
-                info_df = pd.read_excel(data_file, sheet_name=1, header=None, nrows=7)
+                # Read the first 7 rows from the sheet named "Info"
+                info_df = pd.read_excel(data_file, sheet_name="Info", header=None, nrows=7)
                 if not info_df.empty:
                     with st.expander("Show Dataset Information", expanded=True):
                         # Iterate through the rows and display them
@@ -58,8 +58,8 @@ def main():
                             elif pd.notna(row[0]):
                                 st.markdown(f"**{row[0]}**")
             except Exception:
-                # If Sheet2 doesn't exist or there's an error, just show a warning
-                st.warning("Could not read dataset information from the second sheet of the data file.")
+                # If "Info" sheet doesn't exist or there's an error, just show a warning
+                st.warning("Could not read dataset information from the 'Info' sheet of the data file.")
 
 
             # Load the main data from the first sheet (index 0)
@@ -215,3 +215,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
