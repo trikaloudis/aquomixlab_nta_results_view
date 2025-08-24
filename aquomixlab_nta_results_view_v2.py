@@ -61,7 +61,7 @@ def main():
                 # If "Info" sheet doesn't exist or there's an error, just show a warning
                 st.warning("Could not read dataset information from the 'Info' sheet of the data file.")
 
- # --- Read and display AquOmixLab notes ---
+              # --- Read and display AquOmixLab notes ---
             try:
                 # Read cells B10:B20 from the "Info" sheet
                 notes_df = pd.read_excel(data_file, sheet_name="Info", header=None, skiprows=9, nrows=11, usecols="B")
@@ -230,5 +230,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
